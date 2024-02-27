@@ -12,6 +12,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(toolbarHeight: 0, backgroundColor: Colors.black),
+      backgroundColor: Colors.black,
+      body: Center(
+          child:
+              Image.asset('assets/logo/appicon.jpg', width: 150, height: 150)),
     );
   }
 }
