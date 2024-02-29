@@ -1,6 +1,6 @@
-import 'package:dreamy_walls/providers/bloc/internet_bloc/check_internet_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'domain/services/ApiCaller.dart';
 
@@ -13,21 +13,37 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final ApiCaller apiCaller = ApiCaller();
-  int pageIndex = 0;
+  int pageIndex = 5;
   int perPage = 30;
-
+  List<Map<String, dynamic>> masterList = [];
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
-    homeApiCall();
     super.initState();
+    _scrollController.addListener(_scrollListener);
+    homeApiCall();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent &&
+        _scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent - 200) {
+      homeApiCall();
+    }
   }
 
   homeApiCall() async {
-
     final queryParameters = {'page': pageIndex, 'per_page': perPage};
     final result = await apiCaller.homeApi(queryParameters);
-    
+
     result.fold(
       (failure) {
         SnackBar(
@@ -37,7 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
       (response) {
         if (!mounted) return;
         setState(() => pageIndex++);
-        print('Response: $response');
+        var responseData = response.data;
+        for (var item in responseData) {
+          if (item['premium'] == false) {
+            masterList.add(item);
+            setState(() {});
+          }
+        }
       },
     );
   }
@@ -45,35 +67,29 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: BlocConsumer<CheckInternetBloc, CheckInternetState>(
-          listener: (context, state) {
-            if (state is CheckInternetGainedInitialState) {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                content: Text("Connected"),
-                backgroundColor: Colors.green,
-              ));
-            } else if (state is CheckInternetLostInitialState) {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                content: Text("Not Connected"),
-                backgroundColor: Colors.red,
-              ));
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                content: Text("Loading...."),
-                backgroundColor: Colors.yellow,
-              ));
-            }
+      appBar: AppBar(toolbarHeight: 0, backgroundColor: Colors.black),
+      backgroundColor: Colors.black,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+        child: MasonryGridView.builder(
+          itemCount: masterList.length,
+          physics: const AlwaysScrollableScrollPhysics(),
+          controller: _scrollController,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: CachedNetworkImage(
+                    imageUrl: masterList[index]['urls']['small']),
+              ),
+            );
           },
-          builder: (context, state) {
-            if (state is CheckInternetGainedInitialState) {
-              return const Text("Connected");
-            } else if (state is CheckInternetLostInitialState) {
-              return const Text("Not Connected");
-            } else {
-              return const Text("Loading...");
-            }
-          },
+          gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
         ),
       ),
     );

@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: Colors.black,
       body: Center(
           child:
-              Image.asset('assets/logo/appicon.jpg', width: 150, height: 150)),
+              Image.asset('assets/logo/appicon.jpg', width: 200, height: 200)),
     );
   }
 }
