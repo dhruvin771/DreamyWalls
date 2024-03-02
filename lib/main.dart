@@ -1,7 +1,7 @@
 import 'package:dreamy_walls/providers/bloc/internet_bloc/check_internet_bloc.dart';
+import 'package:dreamy_walls/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dreamy_walls/screens/SplashScreen.dart';
 
 import 'const/color.dart';
 import 'const/string.dart';

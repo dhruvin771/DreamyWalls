@@ -1,6 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dreamy_walls/domain/apiExtension.dart';
+import 'package:dio/dio.dart';
+import 'package:dreamy_walls/extension/api_extension.dart';
+
 import '../../const/string.dart';
 import 'failures.dart';
 
@@ -9,12 +10,14 @@ class ApiCaller {
 
   String baseUrl = unsplashDomain;
 
-  Future<Either<Failure, Response>> homeApi(Map<String, dynamic> queryParameters) async {
+  Future<Either<Failure, Response>> homeApi(
+      Map<String, dynamic> queryParameters) async {
     try {
-      final response = await _dio.get(unsplashDomain.concat(homeEndPoint), queryParameters: queryParameters);
+      final response = await _dio.get(unsplashDomain.concat(homeEndPoint),
+          queryParameters: queryParameters);
       return right(response);
     } catch (e) {
-      if (e is DioError) {
+      if (e is DioException) {
         return left(ServerFailure.fromDioError(e));
       }
       return left(ServerFailure(e.toString()));

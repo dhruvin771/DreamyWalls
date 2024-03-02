@@ -8,19 +8,20 @@ part 'check_internet_event.dart';
 part 'check_internet_state.dart';
 
 class CheckInternetBloc extends Bloc<CheckInternetEvent, CheckInternetState> {
-
   final Connectivity _connectivity = Connectivity();
   StreamSubscription? streamSubscription;
-  CheckInternetBloc() : super(CheckInternetInitialState()) {
-    on<InternetLostEvent>((event, emit)=> emit(CheckInternetLostInitialState()));
-    on<InternetGainedEvent>((event, emit)=>emit(CheckInternetGainedInitialState()));
 
+  CheckInternetBloc() : super(CheckInternetInitialState()) {
+    on<InternetLostEvent>(
+        (event, emit) => emit(CheckInternetLostInitialState()));
+    on<InternetGainedEvent>(
+        (event, emit) => emit(CheckInternetGainedInitialState()));
 
     streamSubscription = _connectivity.onConnectivityChanged.listen((event) {
-      if (event == ConnectivityResult.mobile || event == ConnectivityResult.wifi) {
+      if (event == ConnectivityResult.mobile ||
+          event == ConnectivityResult.wifi) {
         add(InternetGainedEvent());
-      }
-      else{
+      } else {
         add(InternetLostEvent());
       }
     });
@@ -31,5 +32,4 @@ class CheckInternetBloc extends Bloc<CheckInternetEvent, CheckInternetState> {
     streamSubscription?.cancel();
     return super.close();
   }
-
 }
