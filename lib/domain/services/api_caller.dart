@@ -23,4 +23,19 @@ class ApiCaller {
       return left(ServerFailure(e.toString()));
     }
   }
+
+  Future<Either<Failure, Response>> categoriesApi(
+      Map<String, dynamic> queryParameters, String title) async {
+    try {
+      final response = await _dio.get(
+          '${unsplashDomain.concat(categoriesEndPoint)}$title/photos',
+          queryParameters: queryParameters);
+      return right(response);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
 }

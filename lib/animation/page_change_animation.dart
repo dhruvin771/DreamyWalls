@@ -6,7 +6,7 @@ class PageChangeAnimation extends PageRouteBuilder {
   PageChangeAnimation(this.page)
       : super(
             pageBuilder: (context, animation, anotherAnimation) => page,
-            transitionDuration: const Duration(milliseconds: 300),
+            transitionDuration: const Duration(milliseconds: 400),
             reverseTransitionDuration: const Duration(milliseconds: 200),
             transitionsBuilder: (context, animation, anotherAnimation, child) {
               animation = CurvedAnimation(

@@ -1,11 +1,11 @@
-class Home {
+class ImageModel {
   final String description;
   final Map<String, String> urls;
   final String userName;
   final String userProfileImage;
   final int likes;
 
-  Home({
+  ImageModel({
     required this.description,
     required this.urls,
     required this.userName,
@@ -13,8 +13,8 @@ class Home {
     required this.likes,
   });
 
-  factory Home.fromJson(Map<String, dynamic> json) {
-    return Home(
+  factory ImageModel.fromJson(Map<String, dynamic> json) {
+    return ImageModel(
       description: json['description'] ?? "",
       urls: Map<String, String>.from(json['urls'] ?? {}),
       userName: json['user']['name'] ?? "",
