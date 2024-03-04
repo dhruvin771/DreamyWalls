@@ -92,39 +92,34 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     super.build(context);
     if (loading) {
-      return Expanded(
-          child: Center(child: CircularProgressIndicator(color: radiumColor)));
+      return Center(child: CircularProgressIndicator(color: radiumColor));
     } else {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-        child: MasonryGridView.builder(
-          itemCount: masterList.length,
-          physics: const AlwaysScrollableScrollPhysics(),
-          controller: _scrollController,
-          itemBuilder: (BuildContext context, int i) {
-            ImageModel home = masterList[i];
-            return GestureDetector(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                child: CustomCachedNetworkImage(
-                  imageUrl: home.urls['small']!,
-                  index: i,
-                  urls: home.urls,
-                  onRemove: (index) {
-                    masterList.removeAt(index);
-                    setState(() {});
-                  },
-                ),
+      return MasonryGridView.builder(
+        itemCount: masterList.length,
+        controller: _scrollController,
+        itemBuilder: (BuildContext context, int i) {
+          ImageModel home = masterList[i];
+          return GestureDetector(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
+              child: CustomCachedNetworkImage(
+                imageUrl: home.urls['small']!,
+                index: i,
+                urls: home.urls,
+                onRemove: (index) {
+                  masterList.removeAt(index);
+                  setState(() {});
+                },
               ),
-              onTap: () => Navigator.push(
-                  context, PageChangeAnimation(ImageViewScreen(home))),
-            );
-          },
-          gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          ),
+            ),
+            onTap: () => Navigator.push(
+                context, PageChangeAnimation(ImageViewScreen(home))),
+          );
+        },
+        gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
         ),
       );
     }
