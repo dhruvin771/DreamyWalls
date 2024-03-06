@@ -2,23 +2,23 @@ import 'package:dreamy_walls/extension/capitalize_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import '../../animation/page_change_animation.dart';
-import '../../const/color.dart';
-import '../../domain/models/image_model.dart';
-import '../../domain/services/api_caller.dart';
-import '../../widgets/cached_image_network_widget.dart';
-import '../image_view_screen.dart';
+import '../animation/page_change_animation.dart';
+import '../const/color.dart';
+import '../domain/models/image_model.dart';
+import '../domain/services/api_caller.dart';
+import '../widgets/cached_image_network_widget.dart';
+import 'image_view_screen.dart';
 
-class CategoriesScreen extends StatefulWidget {
-  final String title;
+class SearchResultScreen extends StatefulWidget {
+  final String search;
 
-  const CategoriesScreen(this.title, {super.key});
+  const SearchResultScreen(this.search, {super.key});
 
   @override
-  State<CategoriesScreen> createState() => _CategoriesScreenState();
+  State<SearchResultScreen> createState() => _SearchResultScreenState();
 }
 
-class _CategoriesScreenState extends State<CategoriesScreen> {
+class _SearchResultScreenState extends State<SearchResultScreen> {
   final ApiCaller apiCaller = ApiCaller();
   int pageIndex = 1;
   int perPage = 30;
@@ -56,8 +56,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   homeApiCall() async {
-    final queryParameters = {'page': pageIndex, 'per_page': perPage};
-    final result = await apiCaller.categoriesApi(queryParameters, widget.title);
+    final queryParameters = {
+      'page': pageIndex,
+      'per_page': perPage,
+      'query': widget.search
+    };
+    final result = await apiCaller.searchResultApi(queryParameters);
 
     result.fold(
       (failure) {
@@ -69,7 +73,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       (response) {
         if (!mounted) return;
         setState(() => pageIndex++);
-        var responseData = response.data;
+        var responseData = response.data['results'];
         for (var item in responseData) {
           if (item['premium'] == false) {
             masterList.add(ImageModel(
@@ -120,7 +124,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   Spacer(),
                   Padding(
                     padding: const EdgeInsets.all(2.0),
-                    child: Text(widget.title.capitalizeAndReplaceHyphens(),
+                    child: Text(widget.search.capitalizeAndReplaceHyphens(),
                         style: TextStyle(
                             color: radiumColor,
                             fontSize: 22,

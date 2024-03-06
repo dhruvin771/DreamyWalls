@@ -76,8 +76,9 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
               description: item['description'] ?? "",
               urls: Map<String, String>.from(item['urls'] ?? {}),
               userName: item['user']['name'] ?? "",
-              userProfileImage: item['user']['profile_image']['large'] ?? "",
+              userProfileImage: item['user']['profile_image']['medium'] ?? "",
               likes: item['likes'] ?? 0,
+              userPage: item['user']['links']['html'] ?? "",
             ));
           }
         }

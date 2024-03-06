@@ -38,4 +38,32 @@ class ApiCaller {
       return left(ServerFailure(e.toString()));
     }
   }
+
+  Future<Either<Failure, Response>> liveSearchApi(String text) async {
+    try {
+      final response =
+          await _dio.get('${unsplashDomain.concat(liveSearchEndPoint)}/$text');
+      return right(response);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  Future<Either<Failure, Response>> searchResultApi(
+      Map<String, dynamic> queryParameters) async {
+    try {
+      final response = await _dio.get(
+          '${unsplashDomain.concat(searchResultEndPoint)}/photos',
+          queryParameters: queryParameters);
+      return right(response);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
 }

@@ -2,6 +2,7 @@ import 'package:dreamy_walls/const/color.dart';
 import 'package:dreamy_walls/domain/models/image_model.dart';
 import 'package:dreamy_walls/extension/capitalize_words.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../widgets/cached_image_network_widget.dart';
 
@@ -111,29 +112,37 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
                           ],
                         ),
                         const SizedBox(height: 10),
-                        Row(children: [
-                          const SizedBox(width: 5),
-                          SizedBox(
-                            height: 22,
-                            width: 22,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: CustomCachedNetworkImage(
-                                imageUrl: widget.imageDetails.userProfileImage,
-                                index: 0,
-                                urls: widget.imageDetails.urls,
-                                onRemove: (index) {},
+                        GestureDetector(
+                          onTap: () => _launchInBrowserView(
+                              Uri.parse(widget.imageDetails.userPage)),
+                          child: Container(
+                            color: Colors.white.withOpacity(0.0001),
+                            child: Row(children: [
+                              const SizedBox(width: 5),
+                              SizedBox(
+                                height: 22,
+                                width: 22,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: CustomCachedNetworkImage(
+                                    imageUrl:
+                                        widget.imageDetails.userProfileImage,
+                                    index: 0,
+                                    urls: widget.imageDetails.urls,
+                                    onRemove: (index) {},
+                                  ),
+                                ),
                               ),
-                            ),
+                              const SizedBox(width: 10),
+                              Text(
+                                  widget.imageDetails.userName
+                                      .toString()
+                                      .capitalizeWords(),
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 12))
+                            ]),
                           ),
-                          const SizedBox(width: 10),
-                          Text(
-                              widget.imageDetails.userName
-                                  .toString()
-                                  .capitalizeWords(),
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 12))
-                        ]),
+                        ),
                         const SizedBox(height: 10),
                         if (widget.imageDetails.description.isNotEmpty) ...[
                           Container(
@@ -159,5 +168,11 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _launchInBrowserView(Uri url) async {
+    if (!await launchUrl(url, mode: LaunchMode.inAppBrowserView)) {
+      throw Exception('Could not launch $url');
+    }
   }
 }

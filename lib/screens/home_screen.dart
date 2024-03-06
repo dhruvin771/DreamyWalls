@@ -1,9 +1,12 @@
 import 'package:dreamy_walls/const/color.dart';
+import 'package:dreamy_walls/screens/search_screen.dart';
 import 'package:dreamy_walls/screens/tabs/categories_tab.dart';
 import 'package:dreamy_walls/screens/tabs/home_tab.dart';
 import 'package:dreamy_walls/screens/tabs/setting_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import '../animation/page_change_animation.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -60,7 +63,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   ),
                   const Spacer(),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () => Navigator.push(
+                        context, PageChangeAnimation(const SearchScreen())),
                     child: Icon(
                       Icons.search,
                       color: tabController.index == 1

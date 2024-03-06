@@ -1,4 +1,8 @@
+import 'package:dreamy_walls/screens/setting/privacy_policy.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../animation/page_change_animation.dart';
 
 class SettingTab extends StatefulWidget {
   const SettingTab({super.key});
@@ -15,24 +19,26 @@ class _SettingTabState extends State<SettingTab> {
       child: Column(
         children: [
           GestureDetector(
-              child: box(Icons.favorite, "Favourite"),
-              onTap: () {
-                print('open mail');
-              }),
+              child: box(Icons.favorite, "Favourite"), onTap: () {}),
           const SizedBox(height: 6),
           GestureDetector(
               child: box(Icons.contact_support_rounded, "Contact-Us"),
-              onTap: () {
-                print('open mail');
-              }),
+              onTap: () => launchUrl(Uri(
+                    scheme: 'mailto',
+                    path: 'dhruvinp0771@gmail.com',
+                  ))),
           const SizedBox(height: 6),
           GestureDetector(
               child: box(Icons.privacy_tip, "Privacy Policy"),
-              onTap: () {
-                print('open mail');
-              }),
+              onTap: () => Navigator.push(
+                  context, PageChangeAnimation(const PrivacyPolicy()))),
           const SizedBox(height: 6),
-          box(Icons.info, "Version")
+          GestureDetector(
+            child: box(Icons.info, "Version"),
+            onTap: () => const SnackBar(
+              content: Text('Copied Successfully'),
+            ),
+          )
         ],
       ),
     );
