@@ -1,5 +1,7 @@
 import 'package:dreamy_walls/const/color.dart';
-import 'package:dreamy_walls/screens/search_screen.dart';
+import 'package:dreamy_walls/providers/bloc/favourite/favourite_bloc.dart';
+import 'package:dreamy_walls/providers/bloc/favourite/favourite_event.dart';
+import 'package:dreamy_walls/screens/search/search_screen.dart';
 import 'package:dreamy_walls/screens/tabs/categories_tab.dart';
 import 'package:dreamy_walls/screens/tabs/home_tab.dart';
 import 'package:dreamy_walls/screens/tabs/setting_tab.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../animation/page_change_animation.dart';
+import '../storage/database_helper.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late TabController tabController;
+  FavouriteBloc favouriteBloc = FavouriteBloc();
 
   @override
   void initState() {
@@ -27,6 +31,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       vsync: this,
     );
     tabController.addListener(() => setState(() {}));
+    getDatabase();
+  }
+
+  getDatabase() async {
+    var db = await DatabaseHelper().getAllImages();
+    List<String> images = db;
+    for (int i = 0; i < images.length; i++) {
+      favouriteBloc.dispatch(AddStringEvent(images[i]));
+    }
+  }
+
+  @override
+  void dispose() {
+    favouriteBloc.dispose();
+    super.dispose();
   }
 
   @override

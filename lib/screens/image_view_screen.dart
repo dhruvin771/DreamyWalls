@@ -1,6 +1,7 @@
 import 'package:dreamy_walls/const/color.dart';
 import 'package:dreamy_walls/domain/models/image_model.dart';
 import 'package:dreamy_walls/extension/capitalize_words.dart';
+import 'package:dreamy_walls/storage/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -23,6 +24,7 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
   void initState() {
     super.initState();
     _scrollController.addListener(_scrollListener);
+    checkLike();
   }
 
   @override
@@ -38,6 +40,14 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
     } else {
       setState(() => dividerColor = Colors.white.withOpacity(0.2));
     }
+  }
+
+  bool like = false;
+
+  checkLike() async {
+    String url = widget.imageDetails.urls['regular']!;
+    like = await DatabaseHelper().isImageAvailable(url);
+    setState(() {});
   }
 
   @override
@@ -68,16 +78,30 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
                     ),
                   ),
                   const Spacer(),
-                  Container(
-                    height: 35,
-                    width: 35,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30)),
-                    child: const Icon(
-                      Icons.favorite,
-                      color: Colors.red,
-                      size: 22,
+                  GestureDetector(
+                    onTap: () async {
+                      String url = widget.imageDetails.urls['regular']!;
+
+                      if (like) {
+                        await DatabaseHelper().deleteImage(url);
+                        like = false;
+                      } else {
+                        await DatabaseHelper().addImage(url);
+                        like = true;
+                      }
+                      setState(() {});
+                    },
+                    child: Container(
+                      height: 35,
+                      width: 35,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Icon(
+                        Icons.favorite,
+                        color: like ? Colors.red : Colors.grey,
+                        size: 22,
+                      ),
                     ),
                   )
                 ],

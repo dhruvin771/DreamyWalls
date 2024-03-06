@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../animation/page_change_animation.dart';
+import '../setting/favourite_screen.dart';
 
 class SettingTab extends StatefulWidget {
   const SettingTab({super.key});
@@ -19,7 +20,9 @@ class _SettingTabState extends State<SettingTab> {
       child: Column(
         children: [
           GestureDetector(
-              child: box(Icons.favorite, "Favourite"), onTap: () {}),
+              child: box(Icons.favorite, "Favourite"),
+              onTap: () => Navigator.push(
+                  context, PageChangeAnimation(const FavouriteScreen()))),
           const SizedBox(height: 6),
           GestureDetector(
               child: box(Icons.contact_support_rounded, "Contact-Us"),

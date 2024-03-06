@@ -1,10 +1,11 @@
 import 'package:dreamy_walls/const/color.dart';
-import 'package:dreamy_walls/screens/search_result_screen.dart';
+import 'package:dreamy_walls/extension/capitalize_words.dart';
+import 'package:dreamy_walls/screens/search/search_result_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../animation/page_change_animation.dart';
-import '../domain/services/api_caller.dart';
+import '../../animation/page_change_animation.dart';
+import '../../domain/services/api_caller.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -94,6 +95,13 @@ class _SearchScreenState extends State<SearchScreen> {
               width: double.infinity,
               color: Colors.white.withOpacity(0.2),
               height: 0.5),
+          Expanded(
+            child: ListView.builder(
+                itemCount: searchResult.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return box(searchResult[index], index);
+                }),
+          )
         ]),
       ),
     );
@@ -116,6 +124,41 @@ class _SearchScreenState extends State<SearchScreen> {
         }
         setState(() {});
       },
+    );
+  }
+
+  Widget box(String title, int i) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () => Navigator.push(
+              context, PageChangeAnimation(SearchResultScreen(title))),
+          child: Padding(
+            padding:
+                const EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.05),
+                  borderRadius: BorderRadius.circular(8)),
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  Text(
+                    title.capitalizeAndReplaceHyphens(),
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  const Spacer(),
+                  const Icon(
+                    Icons.navigate_next,
+                    color: Colors.white,
+                    size: 20,
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

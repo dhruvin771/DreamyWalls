@@ -2,12 +2,12 @@ import 'package:dreamy_walls/extension/capitalize_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import '../animation/page_change_animation.dart';
-import '../const/color.dart';
-import '../domain/models/image_model.dart';
-import '../domain/services/api_caller.dart';
-import '../widgets/cached_image_network_widget.dart';
-import 'image_view_screen.dart';
+import '../../animation/page_change_animation.dart';
+import '../../const/color.dart';
+import '../../domain/models/image_model.dart';
+import '../../domain/services/api_caller.dart';
+import '../../widgets/cached_image_network_widget.dart';
+import '../image_view_screen.dart';
 
 class SearchResultScreen extends StatefulWidget {
   final String search;
