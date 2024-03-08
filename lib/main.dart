@@ -20,6 +20,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<CheckInternetBloc>(
           create: (BuildContext context) => CheckInternetBloc(),
         ),
+        // BlocProvider<FavoriteBloc>(
+        //   create: (BuildContext context) => FavoriteBloc(),
+        // )
       ],
       child: MaterialApp(
         title: appName,

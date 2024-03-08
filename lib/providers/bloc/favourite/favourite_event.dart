@@ -1,19 +1,36 @@
-abstract class FavouriteEvent {}
+// event.dart
+import 'package:equatable/equatable.dart';
 
-class AddStringEvent extends FavouriteEvent {
-  final String newString;
+abstract class FavoriteEvent extends Equatable {
+  const FavoriteEvent();
 
-  AddStringEvent(this.newString);
+  @override
+  List<Object> get props => [];
 }
 
-class DeleteStringEvent extends FavouriteEvent {
-  final String stringToDelete;
+class AddFavoriteEvent extends FavoriteEvent {
+  final String string;
 
-  DeleteStringEvent(this.stringToDelete);
+  const AddFavoriteEvent(this.string);
+
+  @override
+  List<Object> get props => [string];
 }
 
-class CheckStringEvent extends FavouriteEvent {
-  final String stringToCheck;
+class DeleteFavoriteEvent extends FavoriteEvent {
+  final String string;
 
-  CheckStringEvent(this.stringToCheck);
+  const DeleteFavoriteEvent(this.string);
+
+  @override
+  List<Object> get props => [string];
+}
+
+class CheckFavoriteEvent extends FavoriteEvent {
+  final String string;
+
+  const CheckFavoriteEvent(this.string);
+
+  @override
+  List<Object> get props => [string];
 }

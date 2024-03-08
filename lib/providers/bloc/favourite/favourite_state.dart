@@ -1,9 +1,29 @@
-class FavouriteState {
-  final List<String> strings;
+// state.dart
 
-  FavouriteState(this.strings);
+import 'package:equatable/equatable.dart';
 
-  FavouriteState copyWith({List<String>? strings}) {
-    return FavouriteState(strings ?? this.strings);
-  }
+abstract class FavoriteState extends Equatable {
+  const FavoriteState();
+
+  List<Object> get props => [];
+}
+
+class FavoriteInitial extends FavoriteState {}
+
+class FavoriteLoaded extends FavoriteState {
+  final List<String> favoriteList;
+
+  const FavoriteLoaded(this.favoriteList);
+
+  @override
+  List<Object> get props => [favoriteList];
+}
+
+class FavoriteChecked extends FavoriteState {
+  final bool isAvailable;
+
+  const FavoriteChecked(this.isAvailable);
+
+  @override
+  List<Object> get props => [isAvailable];
 }

@@ -1,39 +1,26 @@
-import 'dart:async';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'favourite_event.dart';
 import 'favourite_state.dart';
 
-class FavouriteBloc {
-  final _stateController = StreamController<FavouriteState>.broadcast();
-  final _eventController = StreamController<FavouriteEvent>();
+class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
+  FavoriteBloc() : super(FavoriteInitial());
 
-  final List<String> _strings = [];
+  final List<String> _favoriteList = [];
 
-  FavouriteBloc() {
-    _eventController.stream.listen(_mapEventToState);
-  }
-
-  Stream<FavouriteState> get state => _stateController.stream;
-
-  void _mapEventToState(FavouriteEvent event) {
-    if (event is AddStringEvent) {
-      _strings.add(event.newString);
-    } else if (event is DeleteStringEvent) {
-      _strings.remove(event.stringToDelete);
-    } else if (event is CheckStringEvent) {
-      bool exists = _strings.contains(event.stringToCheck);
-      _stateController.sink.add(FavouriteState(List.from(_strings)));
-      return;
+  @override
+  Stream<FavoriteState> mapEventToState(FavoriteEvent event) async* {
+    if (event is AddFavoriteEvent) {
+      _favoriteList.add(event.string);
+      yield FavoriteLoaded(_favoriteList);
+    } else if (event is DeleteFavoriteEvent) {
+      _favoriteList.remove(event.string);
+      yield FavoriteLoaded(_favoriteList);
+    } else if (event is CheckFavoriteEvent) {
+      // Check if the favorite list contains the given string
+      bool isAvailable = _favoriteList.contains(event.string);
+      // Emit the state indicating whether the item is available in favorites
+      yield FavoriteChecked(isAvailable);
     }
-    _stateController.sink.add(FavouriteState(List.from(_strings)));
-  }
-
-  void dispose() {
-    _stateController.close();
-    _eventController.close();
-  }
-
-  void dispatch(FavouriteEvent event) {
-    _eventController.sink.add(event);
   }
 }
