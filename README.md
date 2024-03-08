@@ -7,11 +7,11 @@ clearing, Dreamy Walls aims to provide users with a seamless wallpaper browsing 
 ## Screenshot
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/dhruvin771/Dreamy_Walls/main/screenshot/1.png" width="300" alt="Screenshot 1" />
-  <img src="https://raw.githubusercontent.com/dhruvin771/Dreamy_Walls/main/screenshot/2.png" width="300" alt="Screenshot 2" />
-  <img src="https://raw.githubusercontent.com/dhruvin771/Dreamy_Walls/main/screenshot/3.png" width="300" alt="Screenshot 3" />
-<img src="https://raw.githubusercontent.com/dhruvin771/Dreamy_Walls/main/screenshot/4.png" width="300" alt="Screenshot 4" />
-  <img src="https://raw.githubusercontent.com/dhruvin771/Dreamy_Walls/main/screenshot/5.png" width="300" alt="Screenshot 5" />
+  <img src="https://raw.githubusercontent.com/dhruvin771/Dreamy_Walls/main/screenshot/1.png" width="270" alt="Screenshot 1" />
+  <img src="https://raw.githubusercontent.com/dhruvin771/Dreamy_Walls/main/screenshot/2.png" width="270" alt="Screenshot 2" />
+  <img src="https://raw.githubusercontent.com/dhruvin771/Dreamy_Walls/main/screenshot/3.png" width="270" alt="Screenshot 3" />
+<img src="https://raw.githubusercontent.com/dhruvin771/Dreamy_Walls/main/screenshot/4.png" width="270" alt="Screenshot 4" />
+  <img src="https://raw.githubusercontent.com/dhruvin771/Dreamy_Walls/main/screenshot/5.png" width="270" alt="Screenshot 5" />
 </p>
 
 ## Features
