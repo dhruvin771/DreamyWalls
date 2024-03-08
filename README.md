@@ -30,7 +30,7 @@ clearing, Dreamy Walls aims to provide users with a seamless wallpaper browsing 
 
 ## Setup Instructions
 
-1. Clone the repository: `git clone https://github.com/yourusername/DreamyWalls.git`
+1. Clone the repository: `https://github.com/dhruvin771/Dreamy_Walls.git`
 2. Install dependencies: Refer to the `pubspec.yaml` file and ensure all listed dependencies are
    installed.
 3. Customize the app as per your preferences.
