@@ -21,19 +21,18 @@ class CustomCachedNetworkImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: CachedNetworkImage(
-        imageUrl: imageUrl,
-        errorListener: (e) {
-          if (e is SocketException) {
-            print('Error with ${e.address} and message ${e.message}');
-          } else {
-            print('Image Exception is: ${e.runtimeType}');
-          }
-          onRemove(index);
-        },
-        errorWidget: (context, url, error) {
-          return Container();
-        },
-      ),
+          imageUrl: imageUrl,
+          errorListener: (e) {
+            if (e is SocketException) {
+              print('Error with ${e.address} and message ${e.message}');
+            } else {
+              print('Image Exception is: ${e.runtimeType}');
+            }
+            onRemove(index);
+          },
+          errorWidget: (context, url, error) {
+            return Container();
+          }),
     );
   }
 }
