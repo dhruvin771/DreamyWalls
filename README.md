@@ -17,8 +17,7 @@ clearing, Dreamy Walls aims to provide users with a seamless wallpaper browsing 
 ## Features
 
 - **Explore Wallpapers**: Browse a vast collection of high-resolution wallpapers from Unsplash.
-- **Download Wallpapers**: Download wallpapers directly to your device for offline use.(Note:
-  Download feature is currently pending and under development.)
+- **Download Wallpapers**: Download wallpapers directly to your device for offline use.(Note: In Progress)
 - **Like Wallpapers**: Like your favorite wallpapers to save them for later viewing.
 - **Category-wise Browsing**: Explore wallpapers based on different categories for easy navigation.
 - **Live Search**: Instantly find wallpapers with the live search feature for a seamless user
