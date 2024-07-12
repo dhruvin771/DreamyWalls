@@ -1,4 +1,4 @@
-package com.smiley.dreamywalls.dreamy_walls
+package com.smiley.dreamywalls
 
 import io.flutter.embedding.android.FlutterActivity
 
